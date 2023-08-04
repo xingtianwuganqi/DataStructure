@@ -1,5 +1,9 @@
 package main
 
-func main() {
+import (
+	"Golang/linear"
+)
 
+func main() {
+	linear.Text()
 }
