@@ -7,6 +7,10 @@ import (
 
 const MaxSize int = 20
 
+/*
+通过数组实现顺序表
+*/
+
 type SequenceList struct {
 	data  []int
 	lenth int
@@ -21,90 +25,90 @@ func NewSqeList() *SequenceList {
 }
 
 // CreateList 线性表赋值
-func (seq *SequenceList) CreateList(data []int) {
+func (seqSlice *SequenceList) CreateList(data []int) {
 	if len(data) > MaxSize {
 		fmt.Println("超过表的大小")
 		return
 	}
 	for i := 0; i < len(data); i++ {
-		seq.data[i] = data[i]
-		seq.lenth++
+		seqSlice.data[i] = data[i]
+		seqSlice.lenth++
 	}
 }
 
 // RangeList 遍历
-func (seq *SequenceList) RangeList() {
-	for i := 0; i < seq.lenth; i++ {
-		fmt.Printf("元素：%d,第%d个元素\n", seq.data[i], i)
+func (seqSlice *SequenceList) RangeList() {
+	for i := 0; i < seqSlice.lenth; i++ {
+		fmt.Printf("元素：%d,第%d个元素\n", seqSlice.data[i], i)
 	}
 }
 
 // 添加到表的末尾
-func (seq *SequenceList) Append(value int) {
-	if seq.lenth < len(seq.data) {
-		seq.data[seq.lenth] = value
-		seq.lenth++
+func (seqSlice *SequenceList) Append(value int) {
+	if seqSlice.lenth < len(seqSlice.data) {
+		seqSlice.data[seqSlice.lenth] = value
+		seqSlice.lenth++
 	} else {
 		fmt.Println("表已满")
 	}
 }
 
 // InsertSequenceList InsertList 把value插入第i位置
-func (seq *SequenceList) InsertSequenceList(value, i int) error {
-	if i < 0 || i > seq.lenth {
+func (seqSlice *SequenceList) InsertSequenceList(value, i int) error {
+	if i < 0 || i > seqSlice.lenth {
 		return errors.New("error insert location")
 	}
-	if seq.lenth >= len(seq.data) {
+	if seqSlice.lenth >= len(seqSlice.data) {
 		return errors.New("表已满")
 	}
-	for j := seq.lenth - 1; j >= i; j-- {
-		seq.data[j+1] = seq.data[j]
+	for j := seqSlice.lenth - 1; j >= i; j-- {
+		seqSlice.data[j+1] = seqSlice.data[j]
 	}
-	seq.data[i] = value
-	seq.lenth++
+	seqSlice.data[i] = value
+	seqSlice.lenth++
 	return nil
 }
 
 // DeleteItem 删除第i个数据
-func (seq *SequenceList) DeleteItem(i int) error {
-	if i < 0 || i > seq.lenth {
+func (seqSlice *SequenceList) DeleteItem(i int) error {
+	if i < 0 || i > seqSlice.lenth {
 		return errors.New("error delete location")
 	}
-	for j := i; j < seq.lenth; j++ {
-		seq.data[j] = seq.data[j+1]
+	for j := i; j < seqSlice.lenth; j++ {
+		seqSlice.data[j] = seqSlice.data[j+1]
 	}
-	seq.lenth--
+	seqSlice.lenth--
 	return nil
 }
 
 // GetValue 获取指定位置的元素
-func (seq *SequenceList) GetValue(index int) int {
-	if index < 0 || index > seq.lenth {
+func (seqSlice *SequenceList) GetValue(index int) int {
+	if index < 0 || index > seqSlice.lenth {
 		return -1
 	}
-	return seq.data[index]
+	return seqSlice.data[index]
 }
 
 // GetIndex 获取元素下标
-func (seq *SequenceList) GetIndex(value int) int {
-	for i := 0; i < seq.lenth; i++ {
-		if seq.data[i] == value {
+func (seqSlice *SequenceList) GetIndex(value int) int {
+	for i := 0; i < seqSlice.lenth; i++ {
+		if seqSlice.data[i] == value {
 			return i
 		}
 	}
 	return -1
 }
 
-func (seq *SequenceList) IsEmpty() bool {
-	if seq.lenth == 0 {
+func (seqSlice *SequenceList) IsEmpty() bool {
+	if seqSlice.lenth == 0 {
 		return true
 	} else {
 		return false
 	}
 }
 
-func (seq *SequenceList) GetSize() int {
-	return seq.lenth
+func (seqSlice *SequenceList) GetSize() int {
+	return seqSlice.lenth
 }
 
 func Text() {
@@ -129,4 +133,100 @@ func Text() {
 
 	index := arr.GetIndex(6)
 	fmt.Printf("元素6的下标：%d\n", index)
+}
+
+/*
+	适用切片来实现顺序表
+*/
+
+type SeqSliceList struct {
+	data []int
+}
+
+func CreateSeqSliceList() *SeqSliceList {
+	return &SeqSliceList{}
+}
+
+// Append 添加元素
+func (seqSlice *SeqSliceList) Append(value int) {
+	seqSlice.data = append(seqSlice.data, value)
+}
+
+// InsertValue 插入元素
+func (seqSlice *SeqSliceList) InsertValue(value, index int) {
+	if index < 0 || index > len(seqSlice.data) {
+		fmt.Println("插入位置错误")
+		return
+	}
+	seqSlice.data = append(seqSlice.data[:index], append([]int{value}, seqSlice.data[index:]...)...)
+}
+
+// DeleteIndex 删除元素
+func (seqSlice *SeqSliceList) DeleteIndex(index int) {
+	if index < 0 || index >= len(seqSlice.data) {
+		fmt.Println("删除位置错误")
+		return
+	}
+	seqSlice.data = append(seqSlice.data[:index], seqSlice.data[index+1:]...)
+}
+
+// TraversingValue 遍历元素
+func (seqSlice *SeqSliceList) TraversingValue() {
+	for i := 0; i < len(seqSlice.data); i++ {
+		var value = seqSlice.data[i]
+		fmt.Printf("元素：%d,下标：%d\n", value, i)
+	}
+}
+
+// GetSize 获取元素个数
+func (seqSlice *SeqSliceList) GetSize() int {
+	return len(seqSlice.data)
+}
+
+// GetIndex 获取下标
+func (seqSlice *SeqSliceList) GetIndex(value int) int {
+	for i := 0; i < len(seqSlice.data); i++ {
+		var data = seqSlice.data[i]
+		if value == data {
+			fmt.Printf("元素：%d的下标是：%d\n", value, i)
+			return i
+		}
+	}
+	return -1
+}
+
+// GetValue 通过下标获取值
+func (seqSlice *SeqSliceList) GetValue(index int) int {
+	for i := 0; i < len(seqSlice.data); i++ {
+		if i == index {
+			return seqSlice.data[i]
+		}
+	}
+	return -1
+}
+
+func SeqSliceListTest() {
+	var arr = CreateSeqSliceList()
+	arr.Append(0)
+	arr.Append(1)
+	arr.Append(2)
+	arr.Append(3)
+	arr.TraversingValue()
+	fmt.Println("插入数据：")
+	arr.InsertValue(5, 0)
+	arr.InsertValue(6, 5)
+	arr.InsertValue(7, 7)
+	arr.TraversingValue()
+
+	fmt.Println("删除数据")
+	arr.DeleteIndex(3)
+	arr.TraversingValue()
+	fmt.Println("删除最后一个元素")
+	arr.DeleteIndex(len(arr.data) - 1)
+	arr.TraversingValue()
+	value := arr.GetValue(2)
+	fmt.Println(value)
+
+	index := arr.GetIndex(3)
+	fmt.Println(index)
 }

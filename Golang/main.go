@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	linear.Text()
+	linear.SeqSliceListTest()
 }
