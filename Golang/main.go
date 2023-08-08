@@ -1,9 +1,9 @@
 package main
 
-import (
-	"Golang/linear"
-)
+import "Golang/linear"
 
 func main() {
-	linear.SeqSliceListTest()
+	//linear.CreateSeqSliceList()
+	//linear.SeqSliceListTest()
+	linear.LinkTest()
 }
