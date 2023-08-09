@@ -65,21 +65,55 @@ func (link *LinkedList) InsertIndex(value, index int) {
 }
 
 // DeleteNode 删除节点
-func (link *LinkedList) DeleteNode(index int) {
+func (link *LinkedList) DeleteNode(value int) int {
+	find := -1
 	current := link.head
-	for i := 1; i < index; i++ {
-		current = current.next
-		if current.next == nil {
-			fmt.Println("插入位置无效")
-			return
+	for current != nil {
+		// 找到要删除元素的前驱结点
+		if current.next.data == value {
+			find = 1
+			break
 		}
-		// 找到目标元素的前驱节点
+		current = current.next
+	}
+	if find == -1 {
+		return find
+	} else {
+		current.next = current.next.next
+		return 1
 	}
 }
 
-// ChangeNode 改节点
-func (link *LinkedList) ChangeNode(value, index int) {
+// SelectNode 查询
+func (link *LinkedList) SelectNode(value int) int {
+	var i = 1
+	current := link.head
+	for current != nil {
+		current = current.next
+		if current.data == value {
+			return i
+		}
+		i++
+	}
+	return -1
+}
 
+// ChangeNode 改节点
+func (link *LinkedList) ChangeNode(value, index int) int {
+	if index < 1 {
+		return -1
+	}
+	i := 1
+	current := link.head
+	for current != nil {
+		current = current.next
+		if i == index {
+			current.data = value
+			return 1
+		}
+		i++
+	}
+	return -1
 }
 
 // Print 打印元素
@@ -101,4 +135,15 @@ func LinkTest() {
 
 	link.InsertIndex(5, 3)
 	link.Print()
+
+	finish := link.DeleteNode(1)
+	if finish == 1 {
+		fmt.Printf("删除元素%d\n", 1)
+	}
+	link.Print()
+	selValue := link.SelectNode(4)
+	fmt.Printf("查询到的元素，%d\n", selValue)
+	changeValue := link.ChangeNode(1, 2)
+	link.Print()
+	fmt.Printf("替换成功？%d", changeValue)
 }
