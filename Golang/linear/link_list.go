@@ -1,6 +1,9 @@
 package linear
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // ListNode 链表节点
 type ListNode struct {
@@ -84,6 +87,24 @@ func (link *LinkedList) DeleteNode(value int) int {
 	}
 }
 
+// DeleteIndex 删除节点
+func (link *LinkedList) DeleteIndex(index int) int {
+	find := -1
+	i := 0
+	current := link.head
+	for current != nil {
+		if i+1 == index {
+			find = 1
+			break
+		}
+		// 找到删除节点的前驱节点
+		current = current.next
+		i++
+	}
+	current.next = current.next.next
+	return find
+}
+
 // SelectNode 查询
 func (link *LinkedList) SelectNode(value int) int {
 	var i = 1
@@ -98,7 +119,7 @@ func (link *LinkedList) SelectNode(value int) int {
 	return -1
 }
 
-// ChangeNode 改节点
+// ChangeNode 更改节点
 func (link *LinkedList) ChangeNode(value, index int) int {
 	if index < 1 {
 		return -1
@@ -126,6 +147,129 @@ func (link *LinkedList) Print() {
 	fmt.Println("nil")
 }
 
+// IterationReverse 链表的反转 迭代反转
+func (link *LinkedList) IterationReverse() {
+	if link.head == nil || link.head.next == nil {
+		return
+	}
+
+	var beg *ListNode
+	mid := link.head
+	end := link.head.next
+	// 一直遍历
+	for true {
+		// 只需修改mid的指针的指向
+		mid.next = beg
+		if end == nil {
+			break
+		}
+
+		beg = mid
+		mid = end
+		end = end.next
+	}
+
+	link.head = mid
+}
+
+// 两个链表相加
+func addTwoNumbers(l1 *LinkedList, l2 *LinkedList) *LinkedList {
+	l1.Print()
+	l2.Print()
+	var beg *ListNode
+	mid := l1.head
+	end := l1.head.next
+	for true {
+		mid.next = beg
+		if end == nil {
+			break
+		}
+		beg = mid
+		mid = end
+		end = end.next
+	}
+	l1.head = mid
+	l1.Print()
+
+	var beg2 *ListNode
+	mid2 := l2.head
+	end2 := l2.head.next
+	for true {
+		mid2.next = beg2
+		if end2 == nil {
+			break
+		}
+		beg2 = mid2
+		mid2 = end2
+		end2 = end2.next
+	}
+	l2.head = mid2
+	l2.Print()
+
+	// 将数字取出来
+	current := l1.head
+	i := 0
+	total1 := ""
+	for current != nil {
+		if i == 0 && current.data == 0 {
+			current = current.next
+			i++
+			continue
+		}
+		total1 = total1 + strconv.Itoa(current.data)
+		current = current.next
+		i++
+	}
+	fmt.Println("total1")
+	fmt.Println(total1)
+
+	current2 := l2.head
+	i2 := 0
+	total2 := ""
+	for current2 != nil {
+		if i2 == 0 && current2.data == 0 {
+			current2 = current2.next
+			i2++
+			continue
+		}
+		total2 = total2 + strconv.Itoa(current2.data)
+		current2 = current2.next
+		i2++
+	}
+	fmt.Println("total2")
+	fmt.Println(total2)
+
+	total1Num, _ := strconv.Atoi(total1)
+	total2Num, _ := strconv.Atoi(total2)
+	total := total1Num + total2Num
+	totalStr := strconv.Itoa(total)
+	fmt.Println(totalStr)
+	// 根据数字再生成链表
+	link := &LinkedList{head: nil}
+	//curData := link.head
+	for i := 0; i < len(totalStr); i++ {
+		numData, _ := strconv.Atoi(string(totalStr[i]))
+		fmt.Println(numData)
+		node := &ListNode{data: numData, next: nil}
+		//if curData == nil {
+		//	curData = node
+		//	fmt.Println(curData)
+		//	link.head = curData
+		//} else {
+		//	curData.next = node
+		//	fmt.Println(curData)
+		//}
+		//curData = curData.next
+		if link.head == nil {
+			link.head = node
+		} else {
+			link.Insert(numData)
+		}
+	}
+	fmt.Println(link)
+	return link
+}
+
 func LinkTest() {
 	link := CreateLinkedList()
 	link.AddNodes(5)
@@ -142,8 +286,24 @@ func LinkTest() {
 	}
 	link.Print()
 	selValue := link.SelectNode(4)
-	fmt.Printf("查询到的元素，%d\n", selValue)
+	fmt.Printf("查询到的元素的下标，%d\n", selValue)
 	changeValue := link.ChangeNode(1, 2)
 	link.Print()
-	fmt.Printf("替换成功？%d", changeValue)
+	fmt.Printf("替换成功？%d\n", changeValue)
+	link.DeleteIndex(2)
+	link.Print()
+	// 迭代法反转
+	link.IterationReverse()
+	link.Print()
+}
+
+func LinkIterationReverseTest() {
+	l1 := CreateLinkedList()
+	l1.AddNodes(4)
+
+	l2 := CreateLinkedList()
+	l2.AddNodes(5)
+
+	l3 := addTwoNumbers(l1, l2)
+	l3.Print()
 }

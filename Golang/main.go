@@ -5,5 +5,6 @@ import "Golang/linear"
 func main() {
 	//linear.CreateSeqSliceList()
 	//linear.SeqSliceListTest()
-	linear.LinkTest()
+	//linear.LinkTest()
+	linear.LinkIterationReverseTest()
 }
