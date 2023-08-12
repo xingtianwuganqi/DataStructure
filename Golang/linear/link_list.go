@@ -172,6 +172,17 @@ func (link *LinkedList) IterationReverse() {
 	link.head = mid
 }
 
+// 递归反转
+func reverseList(head *ListNode) *ListNode {
+	if head == nil || head.next == nil {
+		return head
+	}
+	newNode := reverseList(head.next)
+	head.next.next = head
+	head.next = nil
+	return newNode
+}
+
 // 两个链表相加
 func addTwoNumbers(l1 *LinkedList, l2 *LinkedList) *LinkedList {
 	l1.Print()
@@ -297,6 +308,7 @@ func LinkTest() {
 	link.Print()
 }
 
+// LinkIterationReverseTest 迭代反转法
 func LinkIterationReverseTest() {
 	l1 := CreateLinkedList()
 	l1.AddNodes(4)
@@ -306,4 +318,171 @@ func LinkIterationReverseTest() {
 
 	l3 := addTwoNumbers(l1, l2)
 	l3.Print()
+}
+
+// 打印
+func printList(head *ListNode) {
+	for head != nil {
+		fmt.Printf("%d -> ", head.data)
+		head = head.next
+	}
+	fmt.Println("nil")
+}
+
+// ReverseListTest 反转测试
+func ReverseListTest() {
+	l1 := CreateLinkedList()
+	l1.AddNodes(4)
+	l1.Print()
+
+	// 递归法
+	node := reverseList(l1.head)
+	printList(node)
+
+	// 头插法
+	newNode := headReverseList(node)
+	printList(newNode)
+
+	printList(node)
+	// 就地逆置法
+	curNode := currentReverseList(newNode)
+	printList(curNode)
+
+	fmt.Println("====")
+	fmt.Println(&node)
+	fmt.Println(&newNode)
+	fmt.Println(&curNode)
+}
+
+/*
+头插法
+*/
+
+func headReverseList(head *ListNode) *ListNode {
+	var newHead *ListNode
+	var temp *ListNode
+	if head == nil || head.next == nil {
+		return head
+	}
+
+	for head != nil {
+		//temp = head  // 取出头结点
+		//head = head.next // 原始链表头结点指向原头结点的下一个节点
+		//temp.next = newHead // 取出来的头结点指向nil，指向新链表的头结点
+		//newHead = temp // 更新新链表的头节点
+		temp = head.next    // 保存头结点的下一个节点
+		head.next = newHead // 将头结点的next指向nil，指向新链表的头结点
+		newHead = head      // 头结点赋值给newHead，更新新链表的头节点
+		head = temp         // 移动到原始链表的下一个节点
+	}
+	return newHead
+}
+
+// 就地逆置法
+func currentReverseList(head *ListNode) *ListNode {
+	var beg *ListNode
+	var end *ListNode
+	if head == nil || head.next == nil {
+		return head
+	}
+
+	beg = head
+	end = head.next
+	for end != nil {
+		beg.next = end.next // beg指向end的下一个节点
+		end.next = head     //end指向head
+		head = end          // head更新为头结点
+		end = beg.next      // end指向beg的下一个节点
+	}
+	return head
+}
+
+/*
+遍历每个元素，判断是否有相同的元素
+时间复杂度 o(n2) n平方
+*/
+
+// LinkIntersect 判断两条链表是否相交
+func LinkIntersect(l1 *ListNode, l2 *ListNode) bool {
+	p1 := l1
+	p2 := l2
+	for p1 != nil {
+		for p2 != nil {
+			if p1 == p2 {
+				return true
+			}
+			p2 = p2.next
+		}
+		p1 = p1.next
+	}
+	return false
+}
+
+/*
+如果相交，则交点的最后一个节点是相同的
+时间复杂度o(n)
+*/
+
+// LinkIntersect1 判断两条链表是否相交
+func LinkIntersect1(l1 *ListNode, l2 *ListNode) bool {
+	p1 := l1
+	p2 := l2
+	for p1 != nil {
+		p1 = p1.next
+	}
+	for p2 != nil {
+		p2 = p2.next
+	}
+	if p1 == p2 {
+		return true
+	}
+	return false
+}
+
+/*
+相交的链表有一段是重合的，只对比重合的一部分就可以
+时间复杂度 o(n)
+*/
+
+func LinkIntersect2(l1 *ListNode, l2 *ListNode) bool {
+	pLong := l1
+	pShot := l2
+	var temp *ListNode
+	var num1, num2, step = 0, 0, 0
+
+	// 获取plong,pshot的长度
+	for pLong != nil {
+		pLong = pLong.next
+		num1 += 1
+	}
+
+	for pShot != nil {
+		pShot = pShot.next
+		num2 += 2
+	}
+	// 重置plong，和pshot
+	pLong = l1
+	pShot = l2
+	step = num1 - num2
+	if num2 > num1 {
+		pLong = l2
+		pShot = l1
+		step = num2 - num1
+	}
+	//在 plong 链表中找到和 pshort 等长度的子链表
+	temp = pLong
+	for step > 0 {
+		temp = temp.next
+		step--
+	}
+
+	//逐个比较 temp 和 pshort 链表中的节点是否相同
+	for temp != nil && pShot != nil {
+		if temp == pShot {
+			return true
+		}
+		temp = temp.next
+		pShot = pShot.next
+	}
+	return false
 }
