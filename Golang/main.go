@@ -7,5 +7,6 @@ func main() {
 	//linear.SeqSliceListTest()
 	//linear.LinkTest()
 	//linear.LinkIterationReverseTest()
-	linear.ReverseListTest()
+	//linear.ReverseListTest()
+	linear.StaticListTest()
 }
