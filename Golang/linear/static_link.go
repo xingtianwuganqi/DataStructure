@@ -16,18 +16,37 @@ type StaticList struct {
 	length  int
 }
 
-func CreateStaticList(num int) *StaticList {
-	var list = new(StaticList)
-	for i := 0; i < num-1; i++ {
-		node := StaticNode{cur: i + 1}
-		list.Element[i] = node
+func (link *StaticList) InitList() {
+	link.length = 0
+	for i := 0; i < maxSize; i++ {
+		link.Element[i] = StaticNode{data: -1, cur: i}
 	}
-	list.Element[num-1].cur = 0
-	return list
+	link.Element[maxSize-1].cur = 0
+}
+
+// 输出
+func (l *StaticList) Echo() {
+	start := l.Element[maxSize-1].cur
+	index := start
+	for index != 0 {
+		fmt.Print(l.Element[index].data, l.Element[index].cur, "-> ")
+		index = l.Element[index].cur
+	}
+	fmt.Println()
+}
+
+// 判断是否为空
+func (l *StaticList) ListEmpty() bool {
+	if l.length > 0 {
+		return false
+	}
+	return true
 }
 
 func StaticListTest() {
-
-	link := CreateStaticList(5)
-	fmt.Println(link)
+	link := new(StaticList)
+	link.InitList()
+	link.Echo()
+	isEmpty := link.ListEmpty()
+	fmt.Println(isEmpty)
 }
