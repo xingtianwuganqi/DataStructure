@@ -43,6 +43,20 @@ func (l *StaticList) ListEmpty() bool {
 	return true
 }
 
+// 插入元素
+func (l *StaticList) listInsert(value, index int) {
+	if l.length == maxSize {
+		fmt.Println("静态链表已满")
+		return
+	}
+
+	if index < 1 || index > maxSize+1 {
+		fmt.Println("插入位置错误")
+		return
+	}
+
+}
+
 func StaticListTest() {
 	link := new(StaticList)
 	link.InitList()
