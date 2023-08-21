@@ -8,5 +8,6 @@ func main() {
 	//linear.LinkTest()
 	//linear.LinkIterationReverseTest()
 	//linear.ReverseListTest()
-	linear.StaticListTest()
+	//linear.StaticListTest()
+	linear.DoubleLinkedListTest()
 }

@@ -71,7 +71,7 @@ func (link *StaticList) SSLLength() int {
 
 // 输出
 
-//显示链表结构
+// 显示链表结构
 func (link *StaticList) traverse() {
 	for _, v := range link.Element {
 		fmt.Printf("%5d", v.cur)
@@ -121,9 +121,25 @@ func (link *StaticList) listInsert(value, index int) bool {
 }
 
 // MARK: 删除元素
-func (link *StaticList) DeleteLink(index int, node *StaticNode) {
-	
-}
+//func (link *StaticList) DeleteLink(index int, node *StaticNode) {
+//	if index < 1 || index > link.SSLLength() {
+//		fmt.Println("插入位置错误")
+//		return
+//	}
+//
+//	// 判断表非空
+//	k := maxSize - 1
+//	// 找到第i-1个元素的数组下标
+//	for l := 1; l < index; l++ {
+//		k = link.Element[k].cur
+//	}
+//	// j为要删除元素的下标
+//	j := link.Element[k].cur
+//	*node = link.Element[j].data
+//	link.Element[k].cur = link.Element[j].cur
+//	link.FreeList(index)
+//	return
+//}
 
 func StaticListTest() {
 	link := new(StaticList)
