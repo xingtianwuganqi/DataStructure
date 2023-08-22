@@ -71,6 +71,72 @@ func insertLine(head *DoubleLinkNode, data int, add int) *DoubleLinkNode {
 	return head
 }
 
+//删除结点的函数，data为要删除结点的数据域的值
+func deleteData(head *DoubleLinkNode, data int) *DoubleLinkNode {
+	var temp = head
+	for temp != nil {
+		if temp.data == data {
+			// 删除表头结点
+			if temp.prior == nil {
+				head = head.next
+				if head != nil {
+					head.prior = nil
+					temp.next = nil
+				}
+				return head
+			}
+			// 删除表中结点
+			if temp.prior != nil && temp.next != nil {
+				temp.next.prior = temp.prior
+				temp.prior.next = temp.next
+				return head
+			}
+			// 删除表末尾结点
+			if temp.next == nil {
+				temp.prior.next = nil
+				temp.prior = nil
+				return head
+			}
+		}
+		temp = temp.next
+	}
+	return head
+}
+
+//head为原双链表，elem表示被查找元素
+func selectElem(head *DoubleLinkNode, elem int) int {
+	//新建一个指针t，初始化为头指针 head
+	var temp = head
+	i := 1
+	for temp != nil {
+		if temp.data == elem {
+			return i
+		}
+		i++
+		temp = temp.next
+	}
+	//程序执行至此处，表示查找失败
+	return -1
+}
+
+//更新函数，其中，add 表示要修改的元素，newElem 为新数据的值
+func amendElem(head *DoubleLinkNode, oldElem int, newElem int) {
+	var temp = head
+	var find = 0
+	for temp != nil {
+		if temp.data == oldElem {
+			find = 1
+			break
+		}
+		temp = temp.next
+	}
+	if find == 1 {
+		temp.data = newElem
+		return
+	}
+	fmt.Println("修改失败")
+}
+
 func DoubleLinkedListTest() {
 	var head *DoubleLinkNode = &DoubleLinkNode{
 		prior: nil,
@@ -82,6 +148,10 @@ func DoubleLinkedListTest() {
 
 	insertLine(list, 6, 3)
 	display(list)
-	display(head)
-
+	deleteData(list, 6)
+	display(list)
+	num := selectElem(list, 5)
+	fmt.Println(num)
+	amendElem(list, 3, 6)
+	display(list)
 }
