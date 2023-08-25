@@ -73,15 +73,65 @@ func findAllKillKey(head *circularNode, k, m int) {
 
 注意，如果一个单链表为有环链表，基于单链表中各节点有且仅有 1 个指针域的特性，则势必该链表是没有尾 结点的（如图 1 所示）。
 换句话说，有环链表的遍历过程是无法自行结束的，需要使用 break 语句手动结束遍 历。
+时间复杂度o(n2)
 */
 // 判断链表上有环
 
-func haveRing(head *circularNode) {
+func haveRing(head *circularNode) bool {
+	var temp = head
+	var add [20]*circularNode
+	var length = 0
+	for temp != nil {
+		//依次将 temp 和 add 数组中记录的已遍历的地址进行比对
+		for i := 0; i < length; i++ {
+			if temp == add[i] {
+				return true
+			}
+		}
+		add[length] = temp
+		length++
+		temp = temp.next
+	}
+	return false
+}
 
+/*
+该算法的实现思想需要借助一个论点，即在一个链表中，如果 2 个指针（假设为 H1 和 H2）都从表头开始遍历 链表，
+其中 H1 每次移动 2 个节点的长度（H1 = H1->next->next）,而 H2 每次移动 1 个节点的长度（H2 = H2->next），
+如果该链表为有环链表，则 H1、H2 最终必定会相等；反之，如果该链表中无环，则 H1、H2 永远 不会相遇。
+
+有关在有环链表中 H1 和 H2 必定会相遇的结论，假设有环链表中的环包含 n 个节点，则第一次遍历，H1 和 H2 相差 1 个节点；
+第二次遍历，H1 和 H2 相差 2 个节点；第三次遍历，H1 和 H2 相差 3 个节点...，
+最终 经过多次遍历，H1 和 H2 会相差 n-1 个节点，此时就会在环中重合，此时 H1 和 H2 相等,
+时间复杂度o(n)
+*/
+
+func haveRing2(head *circularNode) bool {
+	var h1 = head.next
+	var h2 = head
+	for h1 != nil {
+		if h1 == h2 {
+			return true
+		} else {
+			h1 = h1.next
+			if h1 == nil {
+				return false
+			} else {
+				h1 = h1.next
+				h2 = h2.next
+			}
+		}
+	}
+	return false
 }
 
 func CircularLinkTest() {
 	head := initCircularLink(6)
 	printCirList(head)
 	findAllKillKey(head, 3, 2)
+	isHave := haveRing(head)
+	fmt.Println(isHave)
+
+	hadRing := haveRing2(head)
+	fmt.Println(hadRing)
 }

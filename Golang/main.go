@@ -1,6 +1,9 @@
 package main
 
-import "Golang/linear"
+import (
+	"Golang/linear"
+	"Golang/stack"
+)
 
 func main() {
 	//linear.CreateSeqSliceList()
@@ -12,4 +15,6 @@ func main() {
 	//linear.DoubleLinkedListTest()
 	linear.CircularLinkTest()
 	//linear.DoubleCircularTest()
+	//stack.StackTest()
+	stack.LinkStackTest()
 }
