@@ -1,7 +1,6 @@
 package main
 
 import (
-	"Golang/linear"
 	"Golang/stack"
 )
 
@@ -13,8 +12,9 @@ func main() {
 	//linear.ReverseListTest()
 	//linear.StaticListTest()
 	//linear.DoubleLinkedListTest()
-	linear.CircularLinkTest()
+	//linear.CircularLinkTest()
 	//linear.DoubleCircularTest()
 	//stack.StackTest()
-	stack.LinkStackTest()
+	//stack.LinkStackTest()
+	stack.MatingStringTest()
 }

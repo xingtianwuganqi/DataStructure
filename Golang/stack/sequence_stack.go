@@ -38,6 +38,25 @@ func (s *Stack) PrintStack() {
 	}
 }
 
+// 匹配{}
+func matchingString(str string) bool {
+	var stack = &Stack{}
+	for i := 0; i < len(str); i++ {
+		var value = str[i]
+		if value == '{' {
+			stack.push(1)
+		} else if value == '}' {
+			stack.pop()
+		}
+	}
+
+	if stack.isEmpty() {
+		return true
+	} else {
+		return false
+	}
+}
+
 func StackTest() {
 	stack := Stack{}
 
@@ -53,4 +72,10 @@ func StackTest() {
 
 	isEmpty := stack.isEmpty()
 	fmt.Println(isEmpty)
+}
+
+func MatingStringTest() {
+	str := "{hello,{world}"
+	finish := matchingString(str)
+	fmt.Println(finish)
 }
