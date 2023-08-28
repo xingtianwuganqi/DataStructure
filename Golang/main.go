@@ -17,4 +17,5 @@ func main() {
 	//stack.StackTest()
 	//stack.LinkStackTest()
 	stack.MatingStringTest()
+	stack.QueueTest()
 }
