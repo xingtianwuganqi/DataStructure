@@ -16,6 +16,7 @@ func main() {
 	//linear.DoubleCircularTest()
 	//stack.StackTest()
 	//stack.LinkStackTest()
-	stack.MatingStringTest()
-	stack.QueueTest()
+	//stack.MatingStringTest()
+	//stack.QueueTest()
+	stack.LinkQueueTest()
 }
