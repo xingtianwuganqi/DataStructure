@@ -1,5 +1,8 @@
 package stack
 
+/*
+1.顺序栈
+*/
 import "fmt"
 
 type Stack struct {

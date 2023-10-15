@@ -5,6 +5,11 @@ import (
 	"strconv"
 )
 
+/*
+链表
+
+*/
+
 // ListNode 链表节点
 type ListNode struct {
 	data int

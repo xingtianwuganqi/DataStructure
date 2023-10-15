@@ -1,5 +1,8 @@
 package stack
 
+/*
+链式队列
+*/
 import "fmt"
 
 type qNode struct {

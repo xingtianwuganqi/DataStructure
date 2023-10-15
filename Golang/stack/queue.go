@@ -1,5 +1,8 @@
 package stack
 
+/*
+队列
+*/
 import "fmt"
 
 type SequenceQueue struct {

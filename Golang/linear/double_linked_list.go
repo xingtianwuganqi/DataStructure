@@ -2,6 +2,10 @@ package linear
 
 import "fmt"
 
+/*
+双链表
+*/
+
 type DoubleLinkNode struct {
 	prior *DoubleLinkNode
 	data  int
