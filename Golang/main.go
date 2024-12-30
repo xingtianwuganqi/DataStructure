@@ -1,12 +1,10 @@
 package main
 
-import (
-	"Golang/stack"
-)
+import "Golang/linear"
 
 func main() {
-	//linear.CreateSeqSliceList()
-	//linear.SeqSliceListTest()
+	linear.CreateSeqSliceList()
+	linear.SeqSliceListTest()
 	//linear.LinkTest()
 	//linear.LinkIterationReverseTest()
 	//linear.ReverseListTest()
@@ -14,9 +12,14 @@ func main() {
 	//linear.DoubleLinkedListTest()
 	//linear.CircularLinkTest()
 	//linear.DoubleCircularTest()
+
 	//stack.StackTest()
 	//stack.LinkStackTest()
 	//stack.MatingStringTest()
 	//stack.QueueTest()
-	stack.LinkQueueTest()
+	//stack.LinkQueueTest()
+
+	// string.StrListTest()
+	//string.StringSliceTest()
+	//string.StringLinkTest()
 }
