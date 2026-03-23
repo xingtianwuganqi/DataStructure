@@ -12,6 +12,9 @@ class Node {
     }
 }
 
+/*
+ 2.链表
+ */
 class LinkList {
     var head : Node?
     var tail : Node?

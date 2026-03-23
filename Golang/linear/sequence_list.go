@@ -8,20 +8,19 @@ import (
 const MaxSize int = 20
 
 /*
+1.顺序表
 通过数组实现顺序表
 */
 
 type SequenceList struct {
 	data  []int
-	lenth int
+	length int
 }
 
 // NewSqeList  声明并初始化顺序表，为顺序表分配内存空间；
 func NewSqeList() *SequenceList {
-	if MaxSize == 0 {
-		return nil
-	}
-	return &SequenceList{data: make([]int, MaxSize, MaxSize), lenth: 0}
+
+	return &SequenceList{data: make([]int, MaxSize, MaxSize), length: 0}
 }
 
 // CreateList 线性表赋值
@@ -32,22 +31,22 @@ func (seqSlice *SequenceList) CreateList(data []int) {
 	}
 	for i := 0; i < len(data); i++ {
 		seqSlice.data[i] = data[i]
-		seqSlice.lenth++
+		seqSlice.length++
 	}
 }
 
 // RangeList 遍历
 func (seqSlice *SequenceList) RangeList() {
-	for i := 0; i < seqSlice.lenth; i++ {
+	for i := 0; i < seqSlice.length; i++ {
 		fmt.Printf("元素：%d,第%d个元素\n", seqSlice.data[i], i)
 	}
 }
 
 // 添加到表的末尾
 func (seqSlice *SequenceList) Append(value int) {
-	if seqSlice.lenth < len(seqSlice.data) {
-		seqSlice.data[seqSlice.lenth] = value
-		seqSlice.lenth++
+	if seqSlice.length < len(seqSlice.data) {
+		seqSlice.data[seqSlice.length] = value
+		seqSlice.length++
 	} else {
 		fmt.Println("表已满")
 	}
@@ -55,35 +54,35 @@ func (seqSlice *SequenceList) Append(value int) {
 
 // InsertSequenceList InsertList 把value插入第i位置
 func (seqSlice *SequenceList) InsertSequenceList(value, i int) error {
-	if i < 0 || i > seqSlice.lenth {
+	if i < 0 || i > seqSlice.length {
 		return errors.New("error insert location")
 	}
-	if seqSlice.lenth >= len(seqSlice.data) {
+	if seqSlice.length >= len(seqSlice.data) {
 		return errors.New("表已满")
 	}
-	for j := seqSlice.lenth - 1; j >= i; j-- {
+	for j := seqSlice.length - 1; j >= i; j-- {
 		seqSlice.data[j+1] = seqSlice.data[j]
 	}
 	seqSlice.data[i] = value
-	seqSlice.lenth++
+	seqSlice.length++
 	return nil
 }
 
 // DeleteItem 删除第i个数据
 func (seqSlice *SequenceList) DeleteItem(i int) error {
-	if i < 0 || i > seqSlice.lenth {
+	if i < 0 || i > seqSlice.length {
 		return errors.New("error delete location")
 	}
-	for j := i; j < seqSlice.lenth; j++ {
+	for j := i; j < seqSlice.length; j++ {
 		seqSlice.data[j] = seqSlice.data[j+1]
 	}
-	seqSlice.lenth--
+	seqSlice.length--
 	return nil
 }
 
 // GetValue 获取指定位置的元素
 func (seqSlice *SequenceList) GetValue(index int) int {
-	if index < 0 || index > seqSlice.lenth {
+	if index < 0 || index > seqSlice.length {
 		return -1
 	}
 	return seqSlice.data[index]
@@ -91,7 +90,7 @@ func (seqSlice *SequenceList) GetValue(index int) int {
 
 // GetIndex 获取元素下标
 func (seqSlice *SequenceList) GetIndex(value int) int {
-	for i := 0; i < seqSlice.lenth; i++ {
+	for i := 0; i < seqSlice.length; i++ {
 		if seqSlice.data[i] == value {
 			return i
 		}
@@ -100,7 +99,7 @@ func (seqSlice *SequenceList) GetIndex(value int) int {
 }
 
 func (seqSlice *SequenceList) IsEmpty() bool {
-	if seqSlice.lenth == 0 {
+	if seqSlice.length == 0 {
 		return true
 	} else {
 		return false
@@ -108,7 +107,7 @@ func (seqSlice *SequenceList) IsEmpty() bool {
 }
 
 func (seqSlice *SequenceList) GetSize() int {
-	return seqSlice.lenth
+	return seqSlice.length
 }
 
 func Text() {
